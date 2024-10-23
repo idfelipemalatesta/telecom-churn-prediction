@@ -1,0 +1,24 @@
+Informações sobre o que representa cada variável do conjunto de dados.
+
+customerId - Código de identificação do consumidor;
+gender - Gênero do consumido;
+SeniorCitizen - Consumidor aposentado;
+Partner - Cliente casado;
+tenure - Quantos meses a pessoa é cliente da empresa;
+PhoneService - Possui serviço telefônico;
+MultipleLine - Possui múltiplas linhas telefônicas;
+InternetService - Qual provedor de serviço de internet;
+OnlineSecurity - Possui serviço de segurança online;
+OnlineBackup - Possui serviço de backup online ativo;
+DeviceProtection - Cliente possui alguma proteção de sistema;
+TechSupport - Possui serviço de suporte técnico ativo;
+StreamingTV - Possui streaming de TV ativo;
+StreamingMovies - Possui serviço de streaming de Filmes ativo;
+Contract - Tipo de contrato do consumidor;
+PaperlessBilling - Cliente utiliza faturamento sem papel;
+PaymentMethod - Método de pagamento;
+MonthlyCharges - Pagamento mensal atual;
+TotalCharges - Valor total que o cliente pagou pelos serviços durante todo o tempo;
+Churn - Cliente abandonou o serviço.
+
+
