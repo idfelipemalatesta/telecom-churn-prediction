@@ -22,6 +22,18 @@ Os **Falso Negativos** são os clientes que o modelo treinado com dados históri
 
 Foi gerado 1 relatório analítico em excel contendo: O valor da fatura mensal, o desconto, o valor da fatura com o desconto, Churn e predict.
 
+Tópicos do projeto:
+
+- Divisão entre os dados de Treinamento e Teste
+- Análise Exploratória dos Dados
+- Pré-processamento
+- Treinamento de 4 modelos com Validação Cruzada Estratificada
+- Otimização de Hiperparâmetros para métrica Recall utilizando o Optuna
+- Previsão nos dados de Teste
+- Avaliação do Desempenho do Modelo e a importância de cada variável
+- Conversão de Machine Learning para Resultados Financeiros
+- Conclusão
+
 **O modelo identifica corretamente 82% dos clientes que cancelaram o serviço.**
 
 Abaixo segue algumas imagens do projeto. O projeto completo pode ser acessado clicando [aqui](https://github.com/idfelipemalatesta/telecom-churn-prediction/blob/main/notebooks/churn_modeling.ipynb)
