@@ -20,7 +20,7 @@ Os **Verdadeiros Positivos** são os clientes que o modelo treinado com dados hi
 
 Os **Falso Negativos** são os clientes que o modelo treinado com dados históricos não conseguir prever o cancelamento do serviço, resultado em perda do cliente para a empresa e sua receita associada. Selecionar um modelo que consegue identificar e reduzir esses clientes é o objetivo do projeto.
 
-Foi gerado 1 relatório analítico em excel contendo: O valor da fatura mensal, o desconto, o valor da fatura com o desconto, Churn e predict.
+**Entregáveis:** 1 relatório analítico em excel contendo: O valor da fatura mensal, o desconto, o valor da fatura com o desconto, Churn e predict.
 
 Tópicos do projeto:
 
