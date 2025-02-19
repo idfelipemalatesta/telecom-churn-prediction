@@ -39,21 +39,21 @@ Tópicos do projeto:
 Abaixo segue algumas imagens do projeto. O projeto completo pode ser acessado clicando [aqui](https://github.com/idfelipemalatesta/telecom-churn-prediction/blob/main/notebooks/churn_modeling.ipynb)
 
 Analisando a distribuição da variável Churn:<br>
-<img src="images/dist_churn.png">
+<img src="report/figures/dist_churn.png">
 
 Analisando as variáveis categóricas:
-<img src="images/categorical_features.png">
+<img src="report/figures/categorical_features.png">
 
 Analisando as variáveis numéricas:
-<img src="images/numerical_churn.png">
+<img src="report/figures/numerical_churn.png">
 
 Analisando o desempenho dos modelos:
-<img src="images/desempenho_modelos.png">
+<img src="report/figures/desempenho_modelos.png">
 
 Analisando as métricas ROC AUC e Precision Recall:
-<img src="images/curvas_metric.png">
+<img src="report/figures/curvas_metric.png">
 
 Analisando a matriz de confusão:<br>
-<img src="images/confusion_matrix.png">
+<img src="report/figures/confusion_matrix.png">
 
 
