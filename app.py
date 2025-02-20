@@ -22,7 +22,7 @@ expected_features = load_features()
 
 
 def preprocess(input_data):
-    print("preprocess")
+    # print("preprocess")
     # Cria o DataFrame a partir do dicionário de dados
     df = pd.DataFrame(input_data, index=[0])
     df = df.drop(["gender", "customerID"], axis=1)
@@ -91,7 +91,7 @@ def get_user_input():
 
 
 def predict(data):
-    print("predict")
+    # print("predict")
     prediction = model.predict(data)
     return prediction
 

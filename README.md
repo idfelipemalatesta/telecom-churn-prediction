@@ -34,23 +34,25 @@ No campo de Machine Learning, utilizamos métricas para avaliar a performance do
 
 ## Imagens do Projeto
 
-Distribuição da Variável Target e Variáveis Categóricas:<br>
-<img src="report/figures/dist_churn.png" style="display: inline-block; width: 49%;">
-<img src="report/figures/categorical_features.png" style="display: inline-block; width: 49%; height: 280">
+Distribuição da Variável Target<br>
+<img src="report/figures/dist_churn.png">
+
+Distribuição das Variáveis Categóricas:
+<img src="report/figures/categorical_features.png">
 
 Distribuição das Variáveis Numéricas:<br>
-<img src="report/figures/numerical_churn.png" style="display: inline-block; width: 100%">
+<img src="report/figures/numerical_churn.png">
 
 Desempenho dos Modelos:<br>
-<img src="report/figures/desempenho_modelos.png" style="display: inline-block; width: 100%; height: 400">
+<img src="report/figures/desempenho_modelos.png">
 
 Métricas ROC AUC e Precision Recall:<br>
-<img src="report/figures/curvas_metric.png" style="display: inline-block; width: 100%">
+<img src="report/figures/curvas_metric.png">
 
 Matriz de Confusão:<br>
-<img src="report/figures/confusion_matrix.png" style="display: inline-block; width: 49%">
+<img src="report/figures/confusion_matrix.png">
 
 Deploy com Streamlit:<br>
 <img src="report/figures/streamlit_app.png" style="display: inline-block; width: 49%">
-<img src="report/figures/streamlit_app2.png" style="display: inline-block; width: 49%; height: 355">
+<img src="report/figures/streamlit_app2.png" style="display: inline-block; width: 49%; height: auto">
 
