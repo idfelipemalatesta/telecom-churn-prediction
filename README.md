@@ -1,4 +1,4 @@
-# Prever Churn de clientes em Telecomunicação
+# Prever Cancelamento de Serviço (Churn) em Telecomunicação
 
 ## Sumário
 
