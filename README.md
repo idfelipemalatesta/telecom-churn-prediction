@@ -1,59 +1,56 @@
 # Prever Churn de clientes em Telecomunicação
 
+## Sumário
+
+- Descrição do Problema
+- Objetivo do Projeto
+- Solução
+- Imagens do Projetos (EDA, Treino, Avaliação e Deploy básico com Streamlit)
+
+Link direto para o notebook do projeto: [churn_modeling](https://github.com/idfelipemalatesta/telecom-churn-prediction/blob/main/notebooks/churn_modeling.ipynb)
+
 ## Descrição do Problema
 
-O setor de telecomunicações é um setor em rápido crescimento que está em constante evolução para atender às demandas dos consumidores. À medida que a tecnologia avança e o comportamento do usuário muda, as operadoras de telecomunicações enfrentam uma variedade de desafios que podem impactar o sucesso de seus negócios. Para permanecerem competitivas e atender às necessidades dos clientes, é importante que as empresas de telecomunicações analisem regularmente seus dados para identificar problemas relevantes e oportunidades de melhoria.
+O setor de telecomunicações está em constante evolução para atender às demandas dos consumidores. Com o avanço da tecnologia e a mudança no comportamento dos usuários, as operadoras enfrentam desafios que podem impactar o sucesso dos negócios. Para se manterem competitivas, é crucial que as empresas analisem regularmente seus dados para identificar problemas e oportunidades de melhoria.
 
-Os dados utilizados neste projeto foram originalmente disponibilizados na [plataforma de ensino da IBM Developer](https://developer.ibm.com/technologies/data-science/). O dataset completo pode ser encontrado neste [link](https://raw.githubusercontent.com/carlosfab/dsnp2/master/datasets/WA_Fn-UseC_-Telco-Customer-Churn.csv).
+Os dados utilizados neste projeto foram disponibilizados pela plataforma de ensino da IBM Developer e podem ser encontrados atráves do link a seguir [datasets](https://raw.githubusercontent.com/carlosfab/dsnp2/master/datasets/WA_Fn-UseC_-Telco-Customer-Churn.csv).
 
 ## Objetivo do Projeto
 
-O objetivo é desenvolver um modelo de Machine Learning que possa prever quais clientes provavelmente abandonarão ou descontinuarão o uso do serviço. A previsão de rotatividade é um problema comercial crítico para empresas que operam em um modelo de assinatura ou receita recorrente, como empresas de telecomunicações.
+Desenvolver um modelo de Machine Learning capaz de prever quais clientes provavelmente abandonarão o serviço. A previsão de rotatividade é um problema crítico para empresas que operam em um modelo de assinatura ou receita recorrente, como as de telecomunicações.
 
-Diminuir o número de falsos negativos e aumentar a presença de verdadeiros positivos resultará em um saldo positivo para a empresa, explico na solução abaixo.
+Reduzir o número de falsos negativos e aumentar a presença de verdadeiros positivos resultará em um saldo positivo para a empresa, conforme explicado na solução abaixo.
 
 ## Solução
 
-Na área de Machine Learning temos métricas para avaliar a performance do modelo. Para este projeto de previsão de cancelamento de serviço a métrica **recall** é de suma importância. A métrica analisa justamente o erro do modelo nos clientes que já cancelaram o serviço anteriormente.
+No campo de Machine Learning, utilizamos métricas para avaliar a performance do modelo. Para este projeto, a métrica **recall** é de suma importância, pois analisa o erro do modelo nos clientes que já cancelaram o serviço anteriormente.
 
-Os **Verdadeiros Positivos** são os clientes que o modelo treinado com dados históricos previu que irão cancelar e realmente cancelaram. Essa análise pode resultar na prevenção de possíveis clientes que cancelaram seus planos e com isso tentar revertê-los.
+- **Verdadeiros Positivos:** Clientes que o modelo previu corretamente que irão cancelar e realmente cancelaram. Essa análise pode ajudar a prevenir cancelamentos futuros.
+- **Falsos Negativos:** Clientes que o modelo não conseguiu prever o cancelamento, resultando em perda de receita. O objetivo é selecionar um modelo que consiga identificar e reduzir esses casos.
 
-Os **Falso Negativos** são os clientes que o modelo treinado com dados históricos não conseguir prever o cancelamento do serviço, resultado em perda do cliente para a empresa e sua receita associada. Selecionar um modelo que consegue identificar e reduzir esses clientes é o objetivo do projeto.
-
-**Entregáveis:** 1 relatório analítico em excel contendo: O valor da fatura mensal, o desconto, o valor da fatura com o desconto, Churn e predict.
-
-Tópicos do projeto:
-
-- Divisão entre os dados de Treinamento e Teste
-- Análise Exploratória dos Dados
-- Pré-processamento
-- Treinamento de 4 modelos com Validação Cruzada Estratificada
-- Otimização de Hiperparâmetros para métrica Recall utilizando o Optuna
-- Previsão nos dados de Teste
-- Avaliação do Desempenho do Modelo e a importância de cada variável
-- Conversão de Machine Learning para Resultados Financeiros
-- Conclusão
+**Entregáveis:** Um relatório analítico em Excel contendo: valor da fatura mensal, desconto, valor da fatura com desconto, Churn e previsão.
 
 **O modelo identifica corretamente 82% dos clientes que cancelaram o serviço.**
 
-Abaixo segue algumas imagens do projeto. O projeto completo pode ser acessado clicando [aqui](https://github.com/idfelipemalatesta/telecom-churn-prediction/blob/main/notebooks/churn_modeling.ipynb)
+## Imagens do Projeto
 
-Analisando a distribuição da variável Churn:<br>
-<img src="report/figures/dist_churn.png">
+Distribuição da Variável Target e Variáveis Categóricas:<br>
+<img src="report/figures/dist_churn.png" style="display: inline-block; width: 49%;">
+<img src="report/figures/categorical_features.png" style="display: inline-block; width: 49%; height: 280">
 
-Analisando as variáveis categóricas:
-<img src="report/figures/categorical_features.png">
+Distribuição das Variáveis Numéricas:<br>
+<img src="report/figures/numerical_churn.png" style="display: inline-block; width: 100%">
 
-Analisando as variáveis numéricas:
-<img src="report/figures/numerical_churn.png">
+Desempenho dos Modelos:<br>
+<img src="report/figures/desempenho_modelos.png" style="display: inline-block; width: 100%; height: 400">
 
-Analisando o desempenho dos modelos:
-<img src="report/figures/desempenho_modelos.png">
+Métricas ROC AUC e Precision Recall:<br>
+<img src="report/figures/curvas_metric.png" style="display: inline-block; width: 100%">
 
-Analisando as métricas ROC AUC e Precision Recall:
-<img src="report/figures/curvas_metric.png">
+Matriz de Confusão:<br>
+<img src="report/figures/confusion_matrix.png" style="display: inline-block; width: 49%">
 
-Analisando a matriz de confusão:<br>
-<img src="report/figures/confusion_matrix.png">
-
+Deploy com Streamlit:<br>
+<img src="report/figures/streamlit_app.png" style="display: inline-block; width: 49%">
+<img src="report/figures/streamlit_app2.png" style="display: inline-block; width: 49%; height: 355">
 
