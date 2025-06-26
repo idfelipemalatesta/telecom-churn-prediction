@@ -1,106 +1,93 @@
 import pandas as pd
-import streamlit as st
+from fastapi import FastAPI, responses
+import joblib
+from pydantic import BaseModel,  PositiveInt, PositiveFloat
 import pickle
-import warnings
+import os
+os.environ["LOKY_MAX_CPU_COUNT"] = "4"  # substitua 4 pelo número de núcleos físicos da sua máquina
 
-warnings.filterwarnings("ignore")
+app = FastAPI()
 
+modelo = joblib.load("../models/lgb_clf.pkl")
 
-def load_model(path="models/lgb_clf.pkl"):
-    with open(path, "rb") as file:
-        return pickle.load(file)
-
-
-def load_features(path="models/features.pkl"):
+def load_features(path="../models/features.pkl"):
     with open(path, "rb") as file:
         features = list(pickle.load(file))
     return features
 
+features = load_features()
 
-model = load_model()
-expected_features = load_features()
+class EspecificacoesCliente(BaseModel):
+    customerID: str
+    gender: str
+    SeniorCitizen: int
+    Partner: str
+    Dependents: str
+    tenure: PositiveInt
+    PhoneService: str
+    MultipleLines: str
+    InternetService: str
+    OnlineSecurity: str
+    OnlineBackup: str
+    DeviceProtection: str
+    TechSupport: str
+    StreamingTV: str
+    StreamingMovies: str
+    Contract: str
+    PaperlessBilling: str
+    PaymentMethod: str
+    MonthlyCharges: PositiveFloat
+    TotalCharges: PositiveFloat
 
+class EspecificacoesClienteResponse(BaseModel):
+    churn: int
 
 def preprocess(input_data):
-    # print("preprocess")
-    # Cria o DataFrame a partir do dicionário de dados
     df = pd.DataFrame(input_data, index=[0])
     df = df.drop(["gender", "customerID"], axis=1)
-    df["SeniorCitizen"] = df["SeniorCitizen"].apply(lambda x: 1 if x == "Yes" else 0)
     df = pd.get_dummies(df)
     # Reindexa com as colunas esperadas (completa com 0 se alguma estiver faltando)
-    df = df.reindex(columns=expected_features, fill_value=0)
-
-    # print(df.columns)
+    df = df.reindex(columns=features, fill_value=0)
     return df
 
+@app.get("/")
+def read_root():
+    return {"message": "API de Previsão de Churn de Clientes"}
 
-def get_user_input():
-    return {
-        "customerID": st.text_input("CustomerID", "0000-AAAAA"),
-        "gender": st.selectbox("Gender", ["Male", "Female"]),
-        "SeniorCitizen": st.selectbox("SeniorCitizen", ["Yes", "No"]),
-        "Partner": st.selectbox("Partner", ["Yes", "No"]),
-        "Dependents": st.selectbox("Dependents", ["Yes", "No"]),
-        "tenure": st.number_input("Tenure", min_value=1, max_value=100, value=1),
-        "PhoneService": st.selectbox("PhoneService", ["Yes", "No"]),
-        "MultipleLines": st.selectbox(
-            "MultipleLines", ["Yes", "No", "No phone service"]
-        ),
-        "InternetService": st.selectbox(
-            "InternetService", ["Fiber optic", "DSL", "No"]
-        ),
-        "OnlineSecurity": st.selectbox(
-            "OnlineSecurity", ["Yes", "No", "No internet service"]
-        ),
-        "OnlineBackup": st.selectbox(
-            "OnlineBackup", ["Yes", "No", "No internet service"]
-        ),
-        "DeviceProtection": st.selectbox(
-            "DeviceProtection", ["Yes", "No", "No internet service"]
-        ),
-        "TechSupport": st.selectbox(
-            "TechSupport", ["Yes", "No", "No internet service"]
-        ),
-        "StreamingTV": st.selectbox(
-            "StreamingTV", ["Yes", "No", "No internet service"]
-        ),
-        "StreamingMovies": st.selectbox(
-            "StreamingMovies", ["Yes", "No", "No internet service"]
-        ),
-        "Contract": st.selectbox(
-            "Contract", ["Month-to-month", "One year", "Two year"]
-        ),
-        "PaperlessBilling": st.selectbox("PaperlessBilling", ["Yes", "No"]),
-        "PaymentMethod": st.selectbox(
-            "PaymentMethod",
-            [
-                "Electronic check",
-                "Mailed check",
-                "Bank transfer (automatic)",
-                "Credit card (automatic)",
-            ],
-        ),
-        "MonthlyCharges": st.number_input(
-            "MonthlyCharges", min_value=10.0, max_value=200.0, value=10.0
-        ),
-        "TotalCharges": st.number_input(
-            "TotalCharges", min_value=10.0, max_value=11000.0, value=10.0
-        ),
-    }
+@app.post("/prever_churn", response_model=EspecificacoesClienteResponse)
+def prever_churn(especificacoes: EspecificacoesCliente):
+
+    dados_entrada = especificacoes.model_dump()
+
+    # Preprocessa os dados
+    dados_prep = preprocess(dados_entrada)
+    
+    # Faz a previsão
+    pred = modelo.predict(dados_prep)
+    response = EspecificacoesClienteResponse(churn=int(pred))
+    return response
 
 
-def predict(data):
-    # print("predict")
-    prediction = model.predict(data)
-    return prediction
 
 
-# Interface do Streamlit
-st.title("Churn Prediction")
-user_data = get_user_input()
+#print(prever_churn('5575-GNVDE','Male',0,'No','No',34,'Yes','No',
+#                   'DSL','Yes','No','Yes','No','No','No','One year',
+#                   'No','Mailed check',56.95,1889.5))
 
-if st.button("Situação"):
-    df = preprocess(user_data)
-    prediction = predict(df)
-    st.write("Situação:", "Churn" if prediction[0] == 1 else "No Churn")
+
+'''
+Para garantir que o pd.get_dummies sempre retorna todas as colunas esperadas (inclusive as que não aparecem no input),
+ você deve reindexar o DataFrame resultante com a lista completa de colunas que o modelo espera, preenchendo com 0 onde faltar.
+
+Você pode salvar a lista de colunas usadas no treinamento (por exemplo, em um arquivo features.pkl)
+e carregá-la para usar na reindexação. Aqui está como ajustar sua função preprocess:
+
+Observação:
+
+Certifique-se de salvar a lista de colunas usadas no treinamento em features.pkl usando
+joblib.dump(list(df.columns), "features.pkl") após o treinamento.
+
+Assim, mesmo que uma categoria não esteja presente no input, a coluna correspondente será criada com valor 0,
+garantindo compatibilidade com o modelo.
+
+'''
