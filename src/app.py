@@ -1,10 +1,10 @@
 import pandas as pd
-from fastapi import FastAPI, responses
+from fastapi import FastAPI
 import joblib
 from pydantic import BaseModel,  PositiveInt, PositiveFloat
 import pickle
 import os
-os.environ["LOKY_MAX_CPU_COUNT"] = "4"  # substitua 4 pelo número de núcleos físicos da sua máquina
+os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
 app = FastAPI()
 
@@ -66,28 +66,3 @@ def prever_churn(especificacoes: EspecificacoesCliente):
     pred = modelo.predict(dados_prep)
     response = EspecificacoesClienteResponse(churn=int(pred))
     return response
-
-
-
-
-#print(prever_churn('5575-GNVDE','Male',0,'No','No',34,'Yes','No',
-#                   'DSL','Yes','No','Yes','No','No','No','One year',
-#                   'No','Mailed check',56.95,1889.5))
-
-
-'''
-Para garantir que o pd.get_dummies sempre retorna todas as colunas esperadas (inclusive as que não aparecem no input),
- você deve reindexar o DataFrame resultante com a lista completa de colunas que o modelo espera, preenchendo com 0 onde faltar.
-
-Você pode salvar a lista de colunas usadas no treinamento (por exemplo, em um arquivo features.pkl)
-e carregá-la para usar na reindexação. Aqui está como ajustar sua função preprocess:
-
-Observação:
-
-Certifique-se de salvar a lista de colunas usadas no treinamento em features.pkl usando
-joblib.dump(list(df.columns), "features.pkl") após o treinamento.
-
-Assim, mesmo que uma categoria não esteja presente no input, a coluna correspondente será criada com valor 0,
-garantindo compatibilidade com o modelo.
-
-'''

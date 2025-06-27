@@ -2,7 +2,10 @@ import streamlit as st
 import requests
 
 # Função para enviar dados para a API e receber a previsão
-def get_previsao(customerID, gender, SeniorCitizen, Partner, Dependents, tenure, PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies, Contract, PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges):
+def get_previsao(customerID, gender, SeniorCitizen, Partner, Dependents, tenure,
+                 PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup,
+                 DeviceProtection, TechSupport, StreamingTV, StreamingMovies,Contract,
+                 PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges):
     url = 'http://127.0.0.1:8000/prever_churn'  # Endereço da API FastAPI
     data = {
         "customerID": customerID,
@@ -61,13 +64,18 @@ StreamingTV = st.selectbox("StreamingTV", ["Yes", "No", "No internet service"])
 StreamingMovies = st.selectbox("StreamingMovies", ["Yes", "No", "No internet service"])
 Contract = st.selectbox("Contract", ["Month-to-month", "One year", "Two year"])
 PaperlessBilling = st.selectbox("PaperlessBilling", ["Yes", "No"])
-PaymentMethod = st.selectbox("PaymentMethod",["Electronic check","Mailed check","Bank transfer (automatic)","Credit card (automatic)"])
+PaymentMethod = st.selectbox("PaymentMethod",
+                             ["Electronic check","Mailed check",
+                              "Bank transfer (automatic)","Credit card (automatic)"])
 MonthlyCharges = st.number_input("MonthlyCharges", min_value=10.0, max_value=200.0, value=10.0)
 TotalCharges = st.number_input("TotalCharges", min_value=10.0, max_value=11000.0, value=10.0)
 
 # Botão para fazer a previsão
 if st.button('Situação'):
-    resposta = get_previsao(customerID, gender, SeniorCitizen, Partner, Dependents, tenure, PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies, Contract, PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges)
+    resposta = get_previsao(customerID, gender, SeniorCitizen, Partner, Dependents, tenure, PhoneService,
+                            MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection,
+                            TechSupport, StreamingTV, StreamingMovies, Contract, PaperlessBilling,
+                            PaymentMethod, MonthlyCharges, TotalCharges)
     if resposta is not None and 'churn' in resposta:
         st.success(f'A situação do cliente é: {"Churn" if resposta["churn"] else "No Churn"}')
     else:
